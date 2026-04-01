@@ -1,42 +1,181 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="UTF-8">
-    <title>测试网页</title>
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-        }
-        body {
-            background-color: white;
-            height: 100vh;
-            display: flex;
-            flex-direction: column; /* 改为纵向排列元素 */
-            align-items: center;
-            justify-content: center;
-        }
-        h1 {
-            font-family: "Times New Roman", serif;
-            font-size: 48px;
-            font-weight: normal;
-            color: #000;
-            margin-bottom: 20px; /* 与下方链接拉开间距 */
-        }
-        .server-link {
-            font-size: 24px; /* 设置链接字体大小 */
-            color: #0066cc; /* 链接文字颜色 */
-            text-decoration: none; /* 去除默认下划线（可选） */
-            cursor: pointer; /* 鼠标悬浮显示手型 */
-        }
-        .server-link:hover {
-            color: #003399; /* 悬浮时颜色加深（可选） */
-            text-decoration: underline; /* 悬浮显示下划线（可选） */
-        }
-    </style>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=8" />
+<title>MNS 服务器 - 纯净生存服</title>
+<style type="text/css">
+* { margin:0; padding:0; }
+body {
+    background-color:#E5E5E5;
+    font-family:宋体, Arial;
+    font-size:14px;
+    color:#333333;
+    line-height:180%;
+}
+
+#top-bar {
+    width:780px;
+    margin:20px auto 0 auto;
+    text-align:right;
+    font-size:14px;
+    color:#1E5497;
+    font-weight:bold;
+}
+
+#container {
+    width:780px;
+    margin:10px auto 20px auto;
+    background-color:#FFFFFF;
+    border:1px solid #CCCCCC;
+    padding:30px;
+}
+
+.table_item {
+    width:100%;
+    border-collapse:collapse;
+    margin-bottom:20px;
+}
+.table_item td {
+    border:1px solid #CCCCCC;
+    padding:12px 15px;
+    font-size:14px;
+}
+.table_title {
+    background-color:#F0F7FF;
+    font-weight:bold;
+    color:#1E5497;
+    font-size:16px;
+}
+
+.btn {
+    background-color:#F0F0F0;
+    border:1px solid #666666;
+    padding:6px 14px;
+    font-family:宋体;
+    font-size:14px;
+    cursor:pointer;
+}
+
+a {
+    color:#1E5497;
+    text-decoration:none;
+}
+a:hover {
+    text-decoration:underline;
+}
+
+h1 {
+    font-size:24px;
+    color:#1E5497;
+    margin-bottom:20px;
+    font-weight:bold;
+    text-align:center;
+}
+</style>
 </head>
+
 <body>
-    <h1>该网页正在测试中</h1>
-    <a href="server/index.html" class="server-link">单击我到服务器宣传页面</a>
+
+<div id="top-bar">
+    当前时间：<span id="showTime"></span>
+</div>
+
+<div id="container">
+    <h1>★ Minecraft MNS Network ★</h1>
+
+    <table class="table_item">
+        <tr>
+            <td class="table_title" colspan="2">📜 服务器基本信息</td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                • 版本：Minecraft 1.9 - 1.21.11<br />
+                • 模式：纯净生存 / 经济系统 / 无外挂<br />
+                • 状态：在线中 ✅<br />
+                • IP：mc.mns-cn.com<br />
+                • 端口：42419<br />
+                • 开服时间：2026.2
+            </td>
+        </tr>
+    </table>
+
+    <table class="table_item">
+        <tr>
+            <td class="table_title" colspan="2">🎮 服务器特色</td>
+        </tr>
+        <tr>
+            <td colspan="2">
+                ✔ 不删档，数据永久保存<br />
+                ✔ 完善经济插件，自由交易<br />
+                ✔ 低延迟，适合长期生存<br />
+                ✔ 不禁红石/生电，玩法无限制
+            </td>
+        </tr>
+    </table>
+
+    <table class="table_item">
+        <tr>
+            <td class="table_title" colspan="2">🔗 快速加入</td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <input type="button" class="btn" id="copyIpBtn" value="复制服务器IP" />
+                <a href="hmcl.exe" download><input type="button" class="btn" value="下载HMCL客户端" /></a>
+                <input type="button" class="btn" value="加入玩家QQ群" onclick="alert('请打开QQ，点击加群，搜索群名：MNS服务器；或搜索群号：372248105')" />
+            </td>
+        </tr>
+    </table>
+</div>
+
+<script type="text/javascript">
+// 实时时间
+function showTime() {
+    var date = new Date();
+    var year = date.getFullYear();
+    var month = date.getMonth() + 1;
+    var day = date.getDate();
+    var hour = date.getHours();
+    var minute = date.getMinutes();
+    var second = date.getSeconds();
+
+    month = month < 10 ? "0" + month : month;
+    day = day < 10 ? "0" + day : day;
+    hour = hour < 10 ? "0" + hour : hour;
+    minute = minute < 10 ? "0" + minute : minute;
+    second = second < 10 ? "0" + second : second;
+
+    var timeStr = year + "-" + month + "-" + day + " " + hour + ":" + minute + ":" + second;
+    document.getElementById("showTime").innerHTML = timeStr;
+    setTimeout(showTime, 1000);
+}
+
+// 复制IP
+document.getElementById('copyIpBtn').onclick = function() {
+    var ip = 'play.simpfun.cn:42419';
+    var btn = this;
+    var oldText = btn.value;
+
+    try {
+        var t = document.createElement('textarea');
+        t.value = ip;
+        document.body.appendChild(t);
+        t.select();
+        document.execCommand('copy');
+        document.body.removeChild(t);
+    }catch(e){}
+
+    btn.value = "复制成功！";
+    alert('服务器IP已复制到剪贴板：' + ip);
+    
+    setTimeout(function(){
+        btn.value = oldText;
+    }, 2000);
+};
+
+window.onload = function() {
+    showTime();
+};
+</script>
 </body>
 </html>
