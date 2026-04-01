@@ -1,42 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-CN">
 <head>
     <meta charset="UTF-8">
-    <title>测试网页</title>
+    <title>点击跳转</title>
     <style>
         * {
             margin: 0;
             padding: 0;
+            box-sizing: border-box;
         }
         body {
-            background-color: white;
+            width: 100vw;
             height: 100vh;
+            background-color: white;
             display: flex;
-            flex-direction: column; /* 改为纵向排列元素 */
             align-items: center;
             justify-content: center;
         }
-        h1 {
-            font-family: "Times New Roman", serif;
-            font-size: 48px;
-            font-weight: normal;
+        a {
+            font-size: 60px;
+            font-weight: bold;
             color: #000;
-            margin-bottom: 20px; /* 与下方链接拉开间距 */
+            text-decoration: none;
+            cursor: pointer;
         }
-        .server-link {
-            font-size: 24px; /* 设置链接字体大小 */
-            color: #0066cc; /* 链接文字颜色 */
-            text-decoration: none; /* 去除默认下划线（可选） */
-            cursor: pointer; /* 鼠标悬浮显示手型 */
-        }
-        .server-link:hover {
-            color: #003399; /* 悬浮时颜色加深（可选） */
-            text-decoration: underline; /* 悬浮显示下划线（可选） */
+        /* 鼠标悬停变蓝色 */
+        a:hover {
+            color: #0066ff;
         }
     </style>
 </head>
 <body>
-    <h1>该网页正在测试中</h1>
-    <a href="server/index.html" class="server-link">单击我到服务器宣传页面</a>
+    <a href="https://www.bilibili.com/video/BV1GJ411x7h7" target="_blank">
+        单击此处
+    </a>
 </body>
 </html>
