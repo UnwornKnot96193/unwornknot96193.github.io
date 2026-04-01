@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>版权声明</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: "楷体", "KaiTi", serif;
+        }
+        .copyright {
+            position: absolute;
+            top: 20px;
+            left: 20px; /* 整体容器靠左 */
+            font-size: 30px;
+            line-height: 1.8;
+            width: calc(100% - 40px);
+        }
+        /* 最后一行内容右对齐容器 */
+        .copyright-footer {
+            text-align: right;
+            margin-top: 0; /* 与上一行保持默认行高间距 */
+        }
+        /* Logo尺寸设为180px */
+        .copyright-logo {
+            width: 250px;
+            height: 50px;
+            vertical-align: middle;
+            margin-left: 20px;
+            margin-right: 0;
+        }
+        /* 适配小窗口，防止内容溢出 */
+        @media (max-width: 768px) {
+            .copyright {
+                font-size: 50px; /* 小屏缩小字体，可根据需求调整 */
+            }
+            .copyright-logo {
+                width: 140px;
+                height: 140px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="copyright">
+        服务器所有者&网站制作者：钱宇韬<br>
+        版权所有 © 2026<br>
+        <div class="copyright-footer">
+            南京师范大学附属中学实验初级中学
+            <img src="logo.png" class="copyright-logo" alt="校徽">
+        </div>
+    </div>
+</body>
+</html>
