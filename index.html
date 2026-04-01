@@ -1,0 +1,176 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=8">
+<title>MNS 公共聊天室</title>
+<style type="text/css">
+* { margin:0; padding:0; }
+body {
+    background-color:#E5E5E5;
+    font-family:宋体, Arial;
+    font-size:14px;
+    color:#333;
+    line-height:180%;
+}
+
+#top-bar {
+    width:780px;
+    margin:20px auto 0 auto;
+    text-align:right;
+    font-size:14px;
+    color:#1E5497;
+    font-weight:bold;
+}
+
+#container {
+    width:780px;
+    margin:10px auto 20px auto;
+    background:#FFF;
+    border:1px solid #CCC;
+    padding:30px;
+}
+
+.table_title {
+    background:#F0F7FF;
+    font-weight:bold;
+    color:#1E5497;
+    padding:8px 10px;
+    border:1px solid #CCC;
+    margin-bottom:10px;
+}
+
+.btn {
+    background:#F0F0F0;
+    border:1px solid #666;
+    padding:5px 12px;
+    cursor:pointer;
+    font-family:宋体;
+    font-size:14px;
+}
+
+input {
+    padding:4px;
+    font-family:宋体;
+    font-size:14px;
+    border:1px solid #999;
+    width:98%;
+}
+
+h1 {
+    font-size:24px;
+    color:#1E5497;
+    text-align:center;
+    margin-bottom:20px;
+    font-weight:bold;
+}
+
+#chatBox {
+    height:360px;
+    overflow-y:auto;
+    background:#fafafa;
+    padding:10px;
+    border:1px solid #CCC;
+    margin-bottom:10px;
+    line-height:160%;
+}
+
+.msg {
+    margin:6px 0;
+}
+.name {
+    color:#1E5497;
+    font-weight:bold;
+}
+.time {
+    color:#888;
+    font-size:12px;
+}
+</style>
+</head>
+
+<body>
+
+<div id="top-bar">
+    当前时间：<span id="showTime"></span>
+</div>
+
+<div id="container">
+    <h1>★ MNS 公共聊天室 ★</h1>
+    <div class="table_title">公共频道 · 所有人可见</div>
+
+    <div id="chatBox">欢迎来到 MNS 公共聊天室！</div>
+
+    <input type="text" id="username" placeholder="输入你的昵称" /><br><br>
+    <input type="text" id="msg" placeholder="输入消息…" />
+    <br><br>
+    <input type="button" class="btn" value="发送消息" onclick="sendChat()" />
+</div>
+
+<script>
+// 实时时间
+function showTime() {
+    var d = new Date();
+    var y = d.getFullYear();
+    var m = ("0" + (d.getMonth()+1)).slice(-2);
+    var day = ("0" + d.getDate()).slice(-2);
+    var h = ("0" + d.getHours()).slice(-2);
+    var min = ("0" + d.getMinutes()).slice(-2);
+    var sec = ("0" + d.getSeconds()).slice(-2);
+    var t = y+"-"+m+"-"+day+" "+h+":"+min+":"+sec;
+    document.getElementById("showTime").innerText = t;
+    setTimeout(showTime, 1000);
+}
+
+// 发送消息
+function sendChat() {
+    var user = document.getElementById("username").value || "游客";
+    var text = document.getElementById("msg").value;
+    if (!text) return;
+
+    var time = new Date().toLocaleTimeString();
+    var xhr = new XMLHttpRequest();
+    xhr.open("POST", "https://api.clicapi.com/chat/push", true);
+    xhr.setRequestHeader("Content-Type", "application/json");
+    xhr.send(JSON.stringify({
+        channel: "mns_public_chat",
+        name: user,
+        text: text,
+        time: time
+    }));
+    document.getElementById("msg").value = "";
+}
+
+// 读取消息
+function getChat() {
+    var xhr = new XMLHttpRequest();
+    xhr.open("GET", "https://api.clicapi.com/chat/get?channel=mns_public_chat", true);
+    xhr.onreadystatechange = function() {
+        if (xhr.readyState === 4 && xhr.status === 200) {
+            try {
+                var list = JSON.parse(xhr.responseText);
+                var html = "";
+                for (var i = 0; i < list.length; i++) {
+                    html += "<div class='msg'><span class='name'>" + list[i].name + "</span> <span class='time'>" + list[i].time + "</span><br>" + list[i].text + "</div>";
+                }
+                document.getElementById("chatBox").innerHTML = html;
+                document.getElementById("chatBox").scrollTop = document.getElementById("chatBox").scrollHeight;
+            } catch (e) {}
+        }
+    };
+    xhr.send();
+}
+
+// 回车发送
+document.getElementById("msg").onkeydown = function(e) {
+    if ((e || window.event).keyCode === 13) sendChat();
+};
+
+window.onload = function() {
+    showTime();
+    getChat();
+    setInterval(getChat, 3000);
+};
+</script>
+</body>
+</html>
