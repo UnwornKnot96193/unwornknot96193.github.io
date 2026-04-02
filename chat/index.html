@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<title>在线聊天室（带时间）</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:Arial,sans-serif}
+body{max-width:700px;margin:30px auto;padding:0 15px}
+#chat{
+  height:450px;
+  border:1px solid #ddd;
+  border-radius:10px;
+  padding:12px;
+  overflow-y:auto;
+  background:#f9f9f9
+}
+.msg{
+  margin:8px 0;
+  padding:10px 14px;
+  border-radius:10px;
+  max-width:75%;
+  line-height:1.4;
+  position:relative;
+}
+.other{background:#e4e4e4}
+.self{
+  background:#007bff;
+  color:white;
+  margin-left:auto
+}
+.time{
+  font-size:12px;
+  color:#666;
+  margin-top:4px;
+  text-align:right;
+}
+.self .time{color:rgba(255,255,255,0.8)}
+#input{display:flex;gap:8px;margin-top:10px}
+input{flex:1;padding:12px;border:1px solid #ddd;border-radius:8px}
+button{padding:12px 16px;background:#007bff;color:white;border:none;border-radius:8px;cursor:pointer}
+</style>
+</head>
+<body>
+
+<div id="chat"></div>
+<div id="input">
+<input type="text" id="name" placeholder="昵称" style="width:100px" />
+<input type="text" id="text" placeholder="输入消息..." />
+<button onclick="send()">发送</button>
+</div>
+
+<script>
+const chat = document.getElementById('chat')
+const api = '/.netlify/functions/chat'
+
+// 发送消息
+async function send() {
+  const name = document.getElementById('name').value || '游客'
+  const text = document.getElementById('text').value
+  if (!text) return
+
+  await fetch(api, {
+    method: 'POST',
+    body: JSON.stringify({ name, text })
+  })
+
+  document.getElementById('text').value = ''
+}
+
+// 显示消息
+function addMsg(item, isSelf) {
+  const div = document.createElement('div')
+  div.className = isSelf ? 'msg self' : 'msg other'
+  
+  div.innerHTML = `
+    <div>${item.name}：${item.text}</div>
+    <div class="time">${item.time}</div>
+  `
+  
+  chat.appendChild(div)
+  chat.scrollTop = chat.scrollHeight
+}
+
+// 自动刷新消息
+setInterval(async () => {
+  try {
+    const res = await fetch(api)
+    const messages = await res.json()
+    chat.innerHTML = ''
+    const myName = document.getElementById('name').value || '游客'
+    messages.forEach(m => {
+      addMsg(m, m.name === myName)
+    })
+  } catch (e) {}
+}, 1000)
+</script>
+</body>
+</html>
